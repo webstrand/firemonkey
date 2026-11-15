@@ -186,6 +186,10 @@ class Options {
     Object.assign(pref, data);
     Options.process();
     Script.process();
+
+    // persist imported pref & re-register scripts in background
+    browser.storage.local.set(pref);
+    browser.runtime.sendMessage({update: 'script', pref, ids: App.getIds(pref)});
   }
 }
 // ---------- /options -------------------------------------
@@ -1173,6 +1177,10 @@ document.getElementById('file').addEventListener('change', e => {
     Object.assign(pref, data);
     Options.process();
     Script.process();
+
+    // persist imported pref & re-register scripts in background
+    browser.storage.local.set(pref);
+    browser.runtime.sendMessage({update: 'script', pref, ids: App.getIds(pref)});
   });
 });
 // ---------- /import/export preferences -------------------
